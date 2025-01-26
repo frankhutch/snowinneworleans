@@ -4,8 +4,11 @@ import './App.css';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 relative">
       <Gallery />
+      <div className="fixed-banner">
+      <a href="mailto:snowinneworleans@gmail.com?subject=inquiry">prints/hi-res</a>
+      </div>
     </div>
   );
 }
