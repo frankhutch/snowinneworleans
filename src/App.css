@@ -1,5 +1,5 @@
 body {
-  background: #010101;
+  background: #111;
 }
 
 .container {
@@ -10,8 +10,8 @@ body {
 
 .gallery {
   column-count: 4;
-  column-gap: 15px;
-  margin: 15px;
+  column-gap: 12px;
+  margin: 12px;
   display: block;
 }
 
@@ -23,18 +23,17 @@ body {
 
 .thumbnail {
   width: 100%;
-  margin-bottom: 13px;
+  margin-bottom: 9px;
   height: auto;
   object-fit: cover;
   display: block;
   cursor: pointer;
-  border-radius: 1px;
   transition: filter 1s ease;
-  filter: brightness(0.8) contrast(1.4) saturate(0);
+  filter: brightness(1) contrast(1.2) saturate(0);
 }
 
 .thumbnail:hover {
-  filter: brightness(1.1) contrast(1) saturate(2.2);
+  filter: brightness(1.4) contrast(1) saturate(0.8);
 }
 
 .lightbox {
@@ -96,9 +95,9 @@ body {
 
 .fixed-banner svg {
   position: relative;
-  top: 3px;
+  top: 4px;
   left: -3px;
-  width: 12px;
+  width: 11px;
 }
 
 .fixed-banner a {
@@ -106,8 +105,6 @@ body {
   text-decoration: none;
   opacity: 0.8;
 }
-
-
 
 @media (max-width: 300px) {
   .gallery {

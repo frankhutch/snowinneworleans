@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Lightbox from 'yet-another-react-lightbox';
+import React, { useState, useEffect } from "react";
+import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import { FaSpinner } from 'react-icons/fa';
+import { FaSpinner } from "react-icons/fa";
 
 const importAll = (requireContext) =>
   requireContext.keys().map((key) => requireContext(key));
 
 const mediaFiles = importAll(
-  require.context('../assets/media', false, /\.(png|jpe?g|gif|mp4|webm)$/i)
+  require.context("../assets/media", false, /\.(png|jpe?g|gif|mp4|webm)$/i)
 );
 
 mediaFiles.sort(() => Math.random() - 0.5);
@@ -20,11 +20,24 @@ const altPhrases = [
   "Snow in New Orleans",
 ];
 
+// Randomize border radius
+const getRandomBorderRadius = () => {
+  const randomValue = () => (Math.random() < 0.5 ? "0" : "14px");
+  return {
+    borderTopLeftRadius: randomValue(),
+    borderTopRightRadius: randomValue(),
+    borderBottomRightRadius: randomValue(),
+    borderBottomLeftRadius: randomValue(),
+  };
+};
+
 const Gallery = () => {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
   const [isLoading, setIsLoading] = useState(true);
 
-  const imageFiles = mediaFiles.filter((file) => /\.(jpe?g|png|gif)$/i.test(file));
+  const imageFiles = mediaFiles.filter((file) =>
+    /\.(jpe?g|png|gif)$/i.test(file)
+  );
 
   useEffect(() => {
     let loadedCount = 0;
@@ -37,7 +50,8 @@ const Gallery = () => {
     };
 
     imageFiles.forEach((file) => {
-      const filePath = typeof file === 'object' && file.default ? file.default : file;
+      const filePath =
+        typeof file === "object" && file.default ? file.default : file;
       const img = new Image();
       img.src = filePath;
       img.onload = img.onerror = () => {
@@ -66,7 +80,8 @@ const Gallery = () => {
       {!isLoading && (
         <div className="gallery">
           {mediaFiles.map((file, index) => {
-            const filePath = typeof file === 'object' && file.default ? file.default : file;
+            const filePath =
+              typeof file === "object" && file.default ? file.default : file;
 
             return (
               <div key={index} className="gallery-item">
@@ -82,6 +97,7 @@ const Gallery = () => {
                       e.target.currentTime = 0;
                     }}
                     type="video/mp4"
+                    style={getRandomBorderRadius()} // Apply random border radius
                   />
                 ) : (
                   <img
@@ -89,9 +105,12 @@ const Gallery = () => {
                     alt={altPhrases[Math.floor(Math.random() * altPhrases.length)]}
                     className="thumbnail"
                     onClick={() => {
-                      const imageIndex = imageFiles.findIndex((imageFile) => imageFile === file);
+                      const imageIndex = imageFiles.findIndex(
+                        (imageFile) => imageFile === file
+                      );
                       setLightboxIndex(imageIndex);
                     }}
+                    style={getRandomBorderRadius()} // Apply random border radius
                   />
                 )}
               </div>
@@ -103,8 +122,9 @@ const Gallery = () => {
       {lightboxIndex >= 0 && (
         <Lightbox
           slides={imageFiles.map((file) => {
-            const filePath = typeof file === 'object' && file.default ? file.default : file;
-            return { src: filePath, type: 'image' };
+            const filePath =
+              typeof file === "object" && file.default ? file.default : file;
+            return { src: filePath, type: "image" };
           })}
           open={lightboxIndex >= 0}
           close={() => setLightboxIndex(-1)}
