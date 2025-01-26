@@ -1,0 +1,142 @@
+body {
+  background: #111;
+}
+
+/* Container: Keeps everything within a max-width */
+.container {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Gallery with masonry-style columns */
+.gallery {
+  column-count: 4; /* Set default to 6 columns */
+  column-gap: 10px;
+  margin: 10px;
+  display: block;
+}
+
+/* Gallery items */
+.gallery-item {
+  display: inline-block;
+  width: 100%;
+  break-inside: avoid; /* Prevent items from breaking between columns */
+}
+
+/* Thumbnails */
+.thumbnail {
+  width: 100%;
+  margin-bottom: 8px;
+  height: auto;
+  object-fit: cover; /* Ensures images/videos fit within their container without gaps */
+  display: block;
+  cursor: pointer;
+  border-radius: 1px;
+  transition: filter 1s ease; /* Adds smooth transition for filter effect */
+  filter: brightness(0.8) contrast(1.4) saturate(0) /* Black-and-white with darkened effect */
+}
+
+/* Show color and lighten when hovered */
+.thumbnail:hover {
+  filter: brightness(1.1) contrast(1)  saturate(2.2); /* Restores color and slightly lightens the image */
+}
+
+/* Lightbox styling */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox img, .lightbox video {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+/* Add some styling for the spinner */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full screen height */
+}
+
+.spinner-icon {
+  font-size: 3rem;
+  animation: spin 1s linear infinite;
+  COLOR: #888;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 1024px) {
+  .gallery {
+    column-count: 4; /* Four columns for medium screens (tablets) */
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery {
+    column-count: 3; /* Three columns for tablets/landscape mode */
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery {
+    column-count: 2; /* Two columns for mobile devices */
+  }
+}
+
+
+
+
+
+
+
+
+
+/* Add colored border for video thumbnails */
+.video-thumbnail .thumbnail {
+  filter: none; /* Ensure videos are not black and white */
+  border: 3px solid #ff6347; /* Add a red border for testing */
+  transition: border 0.8s ease;
+}
+
+/* Change border color on hover */
+.video-thumbnail .thumbnail:hover {
+  border: 3px solid #ffa07a; /* Lighten border on hover */
+}
+
+/* Add a "Video" label over thumbnails */
+.video-thumbnail {
+  position: relative;
+}
+
+.video-thumbnail::after {
+  content: "Video";
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(255, 99, 71, 0.8); /* Translucent red background */
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+  z-index: 1;
+}
