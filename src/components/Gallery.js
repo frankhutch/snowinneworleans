@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import { FaSpinner } from "react-icons/fa";
 
 const importAll = (requireContext) =>
   requireContext.keys().map((key) => requireContext(key));
@@ -22,7 +21,7 @@ const altPhrases = [
 
 // Randomize border radius
 const getRandomBorderRadius = () => {
-  const randomValue = () => (Math.random() < 0.5 ? "0" : "14px");
+  const randomValue = () => (Math.random() < 0.5 ? "0" : "35px");
   return {
     borderTopLeftRadius: randomValue(),
     borderTopRightRadius: randomValue(),
@@ -33,91 +32,68 @@ const getRandomBorderRadius = () => {
 
 const Gallery = () => {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
-  const [isLoading, setIsLoading] = useState(true);
 
   const imageFiles = mediaFiles.filter((file) =>
     /\.(jpe?g|png|gif)$/i.test(file)
   );
 
-  useEffect(() => {
-    let loadedCount = 0;
-    const totalFiles = imageFiles.length;
+  const videoFiles = mediaFiles.filter((file) =>
+    /\.(mp4|webm)$/i.test(file)
+  );
 
-    const checkAllFilesLoaded = () => {
-      if (loadedCount === totalFiles) {
-        setIsLoading(false);
-      }
-    };
+  // Generate random border radii for each file and store them
+  const borderRadii = useMemo(
+    () => mediaFiles.map(() => getRandomBorderRadius()),
+    []
+  );
 
-    imageFiles.forEach((file) => {
-      const filePath =
-        typeof file === "object" && file.default ? file.default : file;
-      const img = new Image();
-      img.src = filePath;
-      img.onload = img.onerror = () => {
-        loadedCount++;
-        checkAllFilesLoaded();
-      };
-    });
-
-    if (totalFiles === 0) {
-      setIsLoading(false);
-    }
-  }, []);
-
-  const getVideoThumbnail = (videoPath) => {
-    return `${videoPath}#t=0.5`;
-  };
+  const getVideoThumbnail = (videoPath) => `${videoPath}#t=0.5`;
 
   return (
     <div className="container">
-      {isLoading && (
-        <div className="loading-spinner">
-          <FaSpinner className="spinner-icon" />
-        </div>
-      )}
+      <div className="gallery">
+        {mediaFiles.map((file, index) => {
+          const filePath =
+            typeof file === "object" && file.default ? file.default : file;
 
-      {!isLoading && (
-        <div className="gallery">
-          {mediaFiles.map((file, index) => {
-            const filePath =
-              typeof file === "object" && file.default ? file.default : file;
+          const isImage = /\.(jpe?g|png|gif)$/i.test(filePath);
+          const isVideo = /\.(mp4|webm)$/i.test(filePath);
 
-            return (
-              <div key={index} className="gallery-item">
-                {/\.(mp4|webm)$/i.test(filePath) ? (
-                  <video
-                    src={filePath}
-                    className="thumbnail"
-                    onClick={() => setLightboxIndex(-1)}
-                    controls={true}
-                    preload="auto"
-                    poster={getVideoThumbnail(filePath)}
-                    onLoadedMetadata={(e) => {
-                      e.target.currentTime = 0;
-                    }}
-                    type="video/mp4"
-                    style={getRandomBorderRadius()} // Apply random border radius
-                  />
-                ) : (
-                  <img
-                    src={filePath}
-                    alt={altPhrases[Math.floor(Math.random() * altPhrases.length)]}
-                    className="thumbnail"
-                    onClick={() => {
-                      const imageIndex = imageFiles.findIndex(
-                        (imageFile) => imageFile === file
-                      );
-                      setLightboxIndex(imageIndex);
-                    }}
-                    style={getRandomBorderRadius()} // Apply random border radius
-                  />
-                )}
-              </div>
-            );
-          })}
-        </div>
-      )}
+          return (
+            <div key={index} className="gallery-item">
+              {isImage ? (
+                <img
+                  src={filePath}
+                  alt={
+                    altPhrases[Math.floor(Math.random() * altPhrases.length)]
+                  }
+                  className="thumbnail"
+                  style={borderRadii[index]} // Use precomputed border radius
+                  onClick={() => {
+                    const imageIndex = imageFiles.findIndex(
+                      (imageFile) => imageFile === file
+                    );
+                    setLightboxIndex(imageIndex);
+                  }}
+                />
+              ) : isVideo ? (
+                <video
+                  src={filePath}
+                  className="thumbnail"
+                  poster={getVideoThumbnail(filePath)}
+                  controls
+                  preload="auto"
+                  style={borderRadii[index]} // Use precomputed border radius
+                  onLoadedMetadata={(e) => {
+                    e.target.currentTime = 0;
+                  }}
+                  onClick={() => setLightboxIndex(-1)}
+                />
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
 
       {lightboxIndex >= 0 && (
         <Lightbox

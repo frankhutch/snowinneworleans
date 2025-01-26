@@ -28,12 +28,12 @@ body {
   object-fit: cover;
   display: block;
   cursor: pointer;
-  transition: filter 1s ease;
+  transition: filter 0.5s ease;
   filter: brightness(1) contrast(1.2) saturate(0);
 }
 
 .thumbnail:hover {
-  filter: brightness(1.4) contrast(1) saturate(0.8);
+  filter: brightness(1.4) contrast(0.7) saturate(0.8);
 }
 
 .lightbox {
