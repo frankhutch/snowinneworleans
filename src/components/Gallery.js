@@ -12,6 +12,14 @@ const mediaFiles = importAll(
 
 mediaFiles.sort(() => Math.random() - 0.5);
 
+const altPhrases = [
+  "Snowfall in New Orleans",
+  "New Orleans Snowfall",
+  "Lots of Snow in New Orleans",
+  "Rare Snow Event in New Orleans",
+  "Snow in New Orleans",
+];
+
 const Gallery = () => {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
   const [isLoading, setIsLoading] = useState(true);
@@ -78,7 +86,7 @@ const Gallery = () => {
                 ) : (
                   <img
                     src={filePath}
-                    alt={`Media ${index}`}
+                    alt={altPhrases[Math.floor(Math.random() * altPhrases.length)]}
                     className="thumbnail"
                     onClick={() => {
                       const imageIndex = imageFiles.findIndex((imageFile) => imageFile === file);
