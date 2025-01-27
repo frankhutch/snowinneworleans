@@ -21,7 +21,7 @@ const altPhrases = [
 
 // Randomize border radius
 const getRandomBorderRadius = () => {
-  const randomValue = () => (Math.random() < 0.5 ? "0" : "35px");
+  const randomValue = () => (Math.random() < 0.5 ? "0" : "15px");
   return {
     borderTopLeftRadius: randomValue(),
     borderTopRightRadius: randomValue(),

@@ -10,8 +10,8 @@ body {
 
 .gallery {
   column-count: 4;
-  column-gap: 22px;
-  margin: 22px;
+  column-gap: 12px;
+  margin: 12px;
   display: block;
 }
 
@@ -23,7 +23,7 @@ body {
 
 .thumbnail {
   width: 100%;
-  margin-bottom: 19px;
+  margin-bottom: 9px;
   height: auto;
   object-fit: cover;
   display: block;
@@ -155,26 +155,8 @@ body {
   }
 }
 
-@media (min-width: 2000px) and (max-width: 2399px) {
+@media (min-width: 2000px) {
   .gallery {
     column-count: 7;
-  }
-}
-
-@media (min-width: 2400px) and (max-width: 2799px) {
-  .gallery {
-    column-count: 8;
-  }
-}
-
-@media (min-width: 2800px) and (max-width: 3199px) {
-  .gallery {
-    column-count: 9;
-  }
-}
-
-@media (min-width: 3200px) {
-  .gallery {
-    column-count: 10;
   }
 }
