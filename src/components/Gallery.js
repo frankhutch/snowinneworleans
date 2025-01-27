@@ -6,7 +6,7 @@ const importAll = (requireContext) =>
   requireContext.keys().map((key) => requireContext(key));
 
 const mediaFiles = importAll(
-  require.context("../assets/media", false, /\.(png|jpe?g|gif|mp4|webm)$/i)
+  require.context("../assets/media", false, /\.(jpe?g|mp4)$/i)
 );
 
 mediaFiles.sort(() => Math.random() - 0.5);
@@ -19,7 +19,6 @@ const altPhrases = [
   "Snow in New Orleans",
 ];
 
-// Randomize border radius
 const getRandomBorderRadius = () => {
   const randomValue = () => (Math.random() < 0.5 ? "0" : "35px");
   return {
@@ -41,7 +40,6 @@ const Gallery = () => {
     /\.(mp4|webm)$/i.test(file)
   );
 
-  // Generate random border radii for each file and store them
   const borderRadii = useMemo(
     () => mediaFiles.map(() => getRandomBorderRadius()),
     []
@@ -50,16 +48,21 @@ const Gallery = () => {
   const getVideoThumbnail = (videoPath) => `${videoPath}#t=0.5`;
 
   return (
+
     <div className="container">
+
       <div className="gallery">
+
         {mediaFiles.map((file, index) => {
+
           const filePath =
             typeof file === "object" && file.default ? file.default : file;
 
-          const isImage = /\.(jpe?g|png|gif)$/i.test(filePath);
-          const isVideo = /\.(mp4|webm)$/i.test(filePath);
+          const isImage = /\.(jpe?g)$/i.test(filePath);
+          const isVideo = /\.(mp4)$/i.test(filePath);
 
           return (
+
             <div key={index} className="gallery-item">
               {isImage ? (
                 <img
@@ -68,7 +71,7 @@ const Gallery = () => {
                     altPhrases[Math.floor(Math.random() * altPhrases.length)]
                   }
                   className="thumbnail"
-                  style={borderRadii[index]} // Use precomputed border radius
+                  style={borderRadii[index]}
                   onClick={() => {
                     const imageIndex = imageFiles.findIndex(
                       (imageFile) => imageFile === file
@@ -83,7 +86,7 @@ const Gallery = () => {
                   poster={getVideoThumbnail(filePath)}
                   controls
                   preload="auto"
-                  style={borderRadii[index]} // Use precomputed border radius
+                  style={borderRadii[index]}
                   onLoadedMetadata={(e) => {
                     e.target.currentTime = 0;
                   }}
@@ -92,7 +95,9 @@ const Gallery = () => {
               ) : null}
             </div>
           );
+
         })}
+
       </div>
 
       {lightboxIndex >= 0 && (
@@ -107,8 +112,11 @@ const Gallery = () => {
           index={lightboxIndex}
         />
       )}
+
     </div>
+
   );
+
 };
 
 export default Gallery;
