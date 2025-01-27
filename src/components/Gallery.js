@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
@@ -19,30 +19,11 @@ const altPhrases = [
   "Snow in New Orleans",
 ];
 
-const getRandomBorderRadius = () => {
-  const randomValue = () => (Math.random() < 0.5 ? "0" : "35px");
-  return {
-    borderTopLeftRadius: randomValue(),
-    borderTopRightRadius: randomValue(),
-    borderBottomRightRadius: randomValue(),
-    borderBottomLeftRadius: randomValue(),
-  };
-};
-
 const Gallery = () => {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
 
   const imageFiles = mediaFiles.filter((file) =>
     /\.(jpe?g|png|gif)$/i.test(file)
-  );
-
-  const videoFiles = mediaFiles.filter((file) =>
-    /\.(mp4|webm)$/i.test(file)
-  );
-
-  const borderRadii = useMemo(
-    () => mediaFiles.map(() => getRandomBorderRadius()),
-    []
   );
 
   const getVideoThumbnail = (videoPath) => `${videoPath}#t=0.5`;
@@ -71,7 +52,6 @@ const Gallery = () => {
                     altPhrases[Math.floor(Math.random() * altPhrases.length)]
                   }
                   className="thumbnail"
-                  style={borderRadii[index]}
                   onClick={() => {
                     const imageIndex = imageFiles.findIndex(
                       (imageFile) => imageFile === file
@@ -86,7 +66,6 @@ const Gallery = () => {
                   poster={getVideoThumbnail(filePath)}
                   controls
                   preload="auto"
-                  style={borderRadii[index]}
                   onLoadedMetadata={(e) => {
                     e.target.currentTime = 0;
                   }}
