@@ -58,19 +58,6 @@ body {
   display: flex;
 }
 
-.loading-spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.spinner-icon {
-  font-size: 3rem;
-  animation: spin 1s linear infinite;
-  color: #888;
-}
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -95,9 +82,9 @@ body {
 
 .fixed-banner svg {
   position: relative;
-  top: 4px;
-  left: -3px;
-  width: 11px;
+  top: 2px;
+  left: -1px;
+  width: 15px;
 }
 
 .fixed-banner a {
