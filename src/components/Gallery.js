@@ -112,7 +112,7 @@ const Gallery = () => {
           left: 0;
           width: 100%;
           height: 100%;
-          background: black;
+          background: #fff;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -121,7 +121,7 @@ const Gallery = () => {
         .spinner {
           width: 50px;
           height: 50px;
-          border: 5px solid rgba(255, 255, 255, 0.3);
+          border: 5px solid rgba(0, 0, 0, 0.3);
           border-top: 5px solid white;
           border-radius: 50%;
           animation: spin 1s linear infinite;
