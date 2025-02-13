@@ -79,6 +79,8 @@ body {
   font-size: 0.875rem;
   text-align: center;
   font-family: 'Courier New', Courier, monospace;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
 }
 
 .fixed-banner svg {
@@ -104,10 +106,12 @@ body {
   }
   .fixed-banner {    
     bottom: 0;
+    border-bottom-left-radius: 0;
   }
   .fixed-banner a {    
     font-size: 1.1em;
   }
+  
 }
 
 @media (min-width: 301px) and (max-width: 599px) {
@@ -116,6 +120,7 @@ body {
   }
   .fixed-banner {    
     bottom: 0;
+    border-bottom-left-radius: 0;
   }
   .fixed-banner a {
     font-size: 1.3em;
